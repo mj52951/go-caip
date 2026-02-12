@@ -138,6 +138,17 @@ func (c *AccountID) UnmarshalGQL(v interface{}) error {
 	return nil
 }
 
+func (c AccountID) MarshalText() ([]byte, error) {
+	if err := c.Validate(); err != nil {
+		return nil, err
+	}
+	return []byte(c.String()), nil
+}
+
+func (c *AccountID) UnmarshalText(data []byte) error {
+	return c.Parse(string(data))
+}
+
 type EVMAccountID struct {
 	EVMAddressable
 	AccountID

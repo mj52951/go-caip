@@ -132,3 +132,14 @@ func (c *ChainID) UnmarshalGQL(v interface{}) error {
 
 	return nil
 }
+
+func (c ChainID) MarshalText() ([]byte, error) {
+	if err := c.Validate(); err != nil {
+		return nil, err
+	}
+	return []byte(c.String()), nil
+}
+
+func (c *ChainID) UnmarshalText(data []byte) error {
+	return c.Parse(string(data))
+}

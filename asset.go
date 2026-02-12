@@ -146,6 +146,17 @@ func (a *AssetID) UnmarshalGQL(v interface{}) error {
 	return nil
 }
 
+func (a AssetID) MarshalText() ([]byte, error) {
+	if err := a.Validate(); err != nil {
+		return nil, err
+	}
+	return []byte(a.String()), nil
+}
+
+func (a *AssetID) UnmarshalText(data []byte) error {
+	return a.Parse(string(data))
+}
+
 type EVMAssetID struct {
 	EVMAddressable
 	AssetID
